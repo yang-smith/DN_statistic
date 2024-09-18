@@ -1,101 +1,67 @@
+'use client'
+import { useState, useEffect } from "react";
+import StatCard from "@/components/StatCard";
+import KeywordStatsCard from "@/components/KeywordStatsCard";
+import { FiMessageSquare, FiFileText, FiClock, FiCalendar } from 'react-icons/fi';
 import Image from "next/image";
+import CommunityActivityCard from "@/components/CommunityActivityCard";
+
+// 模拟数据
+const stats = [
+  { icon: <FiMessageSquare className="w-6 h-6 text-blue-500" />, title: "总聊天条数", value: "8,988" },
+  { icon: <FiFileText className="w-6 h-6 text-green-500" />, title: "总文字数", value: "386,187" },
+  { icon: <FiClock className="w-6 h-6 text-yellow-500" />, title: "聊天频率最高的时间段", value: "20:00-22:00", chartImage: "/timechart.png" },
+  { icon: <FiCalendar className="w-6 h-6 text-purple-500" />, title: "每周聊天最多为那一天", value: "周五", chartImage: "/daychart.png" },
+];
 
 export default function Home() {
-  return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="https://nextjs.org/icons/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
+  const [selectedChart, setSelectedChart] = useState<string | null>(null);
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="https://nextjs.org/icons/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+  useEffect(() => {
+    // 找到 "聊天频率最高的时间段" 的卡片并设置为默认选中
+    const defaultCard = stats.find(stat => stat.title === "聊天频率最高的时间段");
+    if (defaultCard && defaultCard.chartImage) {
+      setSelectedChart(defaultCard.chartImage);
+    }
+  }, []);
+
+  return (
+    <div className="min-h-screen bg-[#F9F9F9] p-4 sm:p-8">
+      <main className="max-w-5xl mx-auto">
+        <h1 className="text-2xl sm:text-3xl font-bold mb-6 sm:mb-8 text-center text-gray-900">社区数据</h1>
+        <div className="bg-white rounded-lg shadow-md p-6">
+          <h2 className="text-xl font-semibold mb-4 text-gray-800">在地群聊天记录统计</h2>
+          <div className="grid grid-cols-2 gap-3 sm:gap-6 mb-6 sm:mb-8">
+            {stats.map((stat, index) => (
+              <div key={index} onClick={() => setSelectedChart(stat.chartImage || null)}>
+                <StatCard 
+                  {...stat} 
+                  isSelected={selectedChart === stat.chartImage}
+                />
+              </div>
+            ))}
+          </div>
+          {selectedChart && (
+            <div className="mt-6 sm:mt-8 flex justify-center">
+              <img
+                src={selectedChart}
+                alt="Selected Chart"
+                className="w-full max-w-[600px] h-auto object-contain"
+                onError={(e) => {
+                  console.error("Image failed to load:", selectedChart);
+                  // 可以在这里设置一个回退图像或显示错误消息
+                }}
+              />
+            </div>
+          )}
+        </div>
+        <div className="mt-6 sm:mt-8">
+          <KeywordStatsCard />
+        </div>
+        <div className="mt-8">
+          <CommunityActivityCard />
         </div>
       </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
     </div>
   );
 }
