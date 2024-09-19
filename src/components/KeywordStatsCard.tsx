@@ -1,28 +1,35 @@
 import { useState } from 'react';
 import Image from 'next/image';
 
-const dateRanges = ['近7日', '近30日'];
+const dateRanges = ['八月', '合计'];
+
+const keywordData = {
+  '八月': ['子云', '朋友', 'Mia', '时间', '循环'],
+  '合计': ['小伙伴', '朋友', '余村', '旺柴', '分享']
+};
 
 export default function KeywordStatsCard() {
   const [selectedRange, setSelectedRange] = useState(dateRanges[0]);
 
   const getImageSrc = () => {
-    return selectedRange === '近7日' ? '/wordcloud-7days.png' : '/wordcloud-30days.png';
+      return selectedRange === '八月' ? '/ciyun8.png' : '/ciyun1year.png';
   };
 
   return (
     <div className="bg-white rounded-lg shadow-md p-6">
-      <h2 className="text-xl font-semibold mb-4 text-gray-800">在地群聊天关键词统计</h2>
+      <div className="flex justify-between items-center mb-4">
+        <h2 className="text-xl font-semibold text-gray-800">在地群聊天关键词统计</h2>
+        <span className="text-sm text-gray-500">统计周期 2023-5-13 至 2024-9-13</span>
+      </div>
       <div className="flex items-center justify-between mb-4">
-        <span className="text-sm text-gray-500">统计周期 08-27 至 09-03</span>
         <div className="flex space-x-2">
           {dateRanges.map((range) => (
             <button
               key={range}
               className={`px-3 py-1 text-sm rounded-full ${
                 selectedRange === range
-                  ? 'bg-blue-500 text-white'
-                  : 'bg-gray-200 text-gray-700'
+                  ? 'bg-[#F1F3F7] text-[#6D758F]'
+                  : 'bg-transparent text-[#6D758F]'
               }`}
               onClick={() => setSelectedRange(range)}
             >
@@ -42,8 +49,8 @@ export default function KeywordStatsCard() {
         />
       </div>
       <div>
-        <h3 className="text-sm font-semibold mb-2">排名前五的关键词：</h3>
-        <p className="text-sm text-gray-600">秀水，活动，振中，杨光，分享</p>
+        <h3 className="text-base mb-2">排名前五的关键词：</h3>
+        <p className="text-lg font-semibold">{keywordData[selectedRange as keyof typeof keywordData].join('，')}</p>
       </div>
     </div>
   );
