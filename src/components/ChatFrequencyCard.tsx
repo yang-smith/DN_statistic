@@ -1,7 +1,7 @@
 'use client'
 import { useState } from 'react';
 import Image from 'next/image';
-import { FiClock, FiCalendar, FiMessageSquare, FiFileText } from 'react-icons/fi';
+import { FiMessageSquare, FiFileText } from 'react-icons/fi';
 
 const dateRanges = ['八月', '合计'];
 
@@ -30,7 +30,7 @@ interface StatCardProps {
   value: string;
 }
 
-const StatCard: React.FC<StatCardProps> = ({ icon, title, value }) => (
+const StatCard: React.FC<StatCardProps> = ({ title, value }) => (
   <div className="bg-white rounded-lg p-4 border border-gray-200">
     <div className="flex items-center mb-2">
       <p className="text-xs text-gray-500">{title}</p>
