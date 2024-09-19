@@ -19,7 +19,7 @@ export default function KeywordStatsCard() {
     <div className="bg-white rounded-lg shadow-md p-6">
       <div className="flex justify-between items-center mb-4">
         <h2 className="text-xl font-semibold text-gray-800">在地群聊天关键词统计</h2>
-        <span className="text-sm text-gray-500">统计周期 2023-5-13 至 2024-9-13</span>
+        <span className="text-xs text-gray-500">统计周期 2023-5-13 至 2024-9-13</span>
       </div>
       <div className="flex items-center justify-between mb-4">
         <div className="flex space-x-2">
@@ -42,8 +42,8 @@ export default function KeywordStatsCard() {
         <Image
           src={getImageSrc()}
           alt="关键词词云"
-          width={500}
-          height={300}
+          width={700}
+          height={400}
           layout="responsive"
           className="rounded-lg"
         />

@@ -31,12 +31,11 @@ interface StatCardProps {
 }
 
 const StatCard: React.FC<StatCardProps> = ({ icon, title, value }) => (
-  <div className="bg-white rounded-lg p-4 flex items-center border border-gray-200">
-    <div className="mr-4">{icon}</div>
-    <div>
-      <p className="text-sm text-gray-500">{title}</p>
-      <p className="text-xl font-semibold">{value}</p>
+  <div className="bg-white rounded-lg p-4 border border-gray-200">
+    <div className="flex items-center mb-2">
+      <p className="text-xs text-gray-500">{title}</p>
     </div>
+    <p className="text-xl font-semibold">{value}</p>
   </div>
 );
 
@@ -47,10 +46,10 @@ export default function ChatFrequencyCard() {
   const currentData = frequencyData[selectedRange as keyof typeof frequencyData];
 
   return (
-    <div className="bg-white rounded-lg shadow-md p-6">
+    <div className="bg-white rounded-lg shadow-md p-4 sm:p-6">
       <h2 className="text-xl font-semibold mb-4 text-gray-800">在地群聊天记录统计</h2>
-      <div className="flex items-center justify-between mb-4">
-        <div className="flex space-x-2">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-4">
+        <div className="flex space-x-2 mb-2 sm:mb-0">
           {dateRanges.map((range) => (
             <button
               key={range}
@@ -65,7 +64,7 @@ export default function ChatFrequencyCard() {
             </button>
           ))}
         </div>
-        <span className="text-sm text-gray-500">统计周期 2023-5-13 至 2024-9-13</span>
+        <span className="text-xs text-gray-500">统计周期 2023-5-13 至 2024-9-13</span>
       </div>
       <div className="grid grid-cols-2 gap-3 sm:gap-6 mb-6">
         <StatCard icon={<FiMessageSquare className="w-6 h-6 text-blue-500" />} title="在地群聊天条数" value={currentData.totalMessages} />
@@ -76,9 +75,8 @@ export default function ChatFrequencyCard() {
           className={`flex items-center p-4 rounded-lg cursor-pointer border border-gray-200 ${activeChart === 'time' ? 'bg-[#FFF4F4]' : 'bg-white'}`}
           onClick={() => setActiveChart('time')}
         >
-          <FiClock className="w-6 h-6 text-yellow-500 mr-2" />
           <div>
-            <p className="text-sm text-[#6D758F]">聊天频率最高的时间段</p>
+            <p className="text-xs text-[#6D758F] mb-2">聊天频率最高的时间段</p>
             <p className="text-lg font-semibold">{currentData.highestTimeSlot}</p>
           </div>
         </div>
@@ -86,9 +84,8 @@ export default function ChatFrequencyCard() {
           className={`flex items-center p-4 rounded-lg cursor-pointer border border-gray-200 ${activeChart === 'day' ? 'bg-[#F4F6FF]' : 'bg-white'}`}
           onClick={() => setActiveChart('day')}
         >
-          <FiCalendar className="w-6 h-6 text-purple-500 mr-2" />
           <div>
-            <p className="text-sm text-[#6D758F]">每周聊天最多为那一天</p>
+            <p className="text-xs text-[#6D758F] mb-2">每周聊天最多为那一天</p>
             <p className="text-lg font-semibold">{currentData.mostActiveDay}</p>
           </div>
         </div>
