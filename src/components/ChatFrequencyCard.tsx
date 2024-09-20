@@ -48,24 +48,25 @@ export default function ChatFrequencyCard() {
   return (
     <div className="bg-white rounded-lg shadow-md p-4 sm:p-6">
       <h2 className="text-xl font-semibold mb-4 text-gray-800">在地群聊天记录统计</h2>
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-4">
-        <div className="flex space-x-2 mb-2 sm:mb-0">
-          {dateRanges.map((range) => (
-            <button
-              key={range}
-              className={`px-3 py-1 text-sm rounded-full ${
-                selectedRange === range
-                  ? 'bg-[#F1F3F7] text-[#6D758F]'
-                  : 'bg-transparent text-[#6D758F]'
-              }`}
-              onClick={() => setSelectedRange(range)}
-            >
-              {range}
-            </button>
-          ))}
+
+        <div className="flex justify-between items-center mb-4">
+          <div className="flex space-x-2">
+            {dateRanges.map((range) => (
+              <button
+                key={range}
+                className={`px-3 py-1 text-sm rounded-full ${
+                  selectedRange === range
+                    ? 'bg-[#F1F3F7] text-[#6D758F]'
+                    : 'bg-transparent text-[#6D758F]'
+                }`}
+                onClick={() => setSelectedRange(range)}
+              >
+                {range}
+              </button>
+            ))}
+          </div>
+          <span className="text-xs text-gray-500 sm:text-right">统计周期 2023-5-13 至 2024-9-13</span>
         </div>
-        <span className="text-xs text-gray-500">统计周期 2023-5-13 至 2024-9-13</span>
-      </div>
       <div className="grid grid-cols-2 gap-3 sm:gap-6 mb-6">
         <StatCard icon={<FiMessageSquare className="w-6 h-6 text-blue-500" />} title="在地群聊天条数" value={currentData.totalMessages} />
         <StatCard icon={<FiFileText className="w-6 h-6 text-green-500" />} title="总文字数" value={currentData.totalWords} />

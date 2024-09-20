@@ -65,24 +65,24 @@ const CommunityActivityCard: React.FC = () => {
 
   return (
     <div className="bg-white rounded-lg shadow-md p-6">
+      <h2 className="text-xl font-semibold text-gray-800 mb-4">社区活动数据统计</h2>
       <div className="flex justify-between items-center mb-4">
-        <h2 className="text-xl font-semibold text-gray-800">社区活动数据统计</h2>
+        <div className="flex space-x-2">
+          {dateRanges.map((range) => (
+            <button
+              key={range}
+              className={`px-3 py-1 text-sm rounded-full ${
+                selectedRange === range
+                  ? 'bg-[#F1F3F7] text-[#6D758F]'
+                  : 'bg-transparent text-[#6D758F]'
+              }`}
+              onClick={() => setSelectedRange(range)}
+            >
+              {range}
+            </button>
+          ))}
+        </div>
         <span className="text-xs text-gray-500">统计周期 2023-5-13 至 2024-9-13</span>
-      </div>
-      <div className="flex space-x-2 mb-4">
-        {dateRanges.map((range) => (
-          <button
-            key={range}
-            className={`px-3 py-1 text-sm rounded-full ${
-              selectedRange === range
-                ? 'bg-[#F1F3F7] text-[#6D758F]'
-                : 'bg-transparent text-[#6D758F]'
-            }`}
-            onClick={() => setSelectedRange(range)}
-          >
-            {range}
-          </button>
-        ))}
       </div>
       <div className="grid grid-cols-2 gap-4 mb-6">
         <div className="rounded-lg p-4 border border-[#B4B9C9]">
